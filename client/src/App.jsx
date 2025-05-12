@@ -19,7 +19,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="results/:dishName" element={<ResultsPage />} />
+            {/* <Route path="results/:dishName" element={<ResultsPage />} /> */}
+            <Route path="results" element={<ResultsPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

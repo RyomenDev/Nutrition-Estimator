@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,26 +8,43 @@ const DishForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  //   const handleSubmit = (e: React.FormEvent) => {
+  //     e.preventDefault();
+
+  //     if (!dishName.trim()) {
+  //       toast.error("Please enter a dish name");
+  //       return;
+  //     }
+
+  //     setIsSubmitting(true);
+
+  //     // Nutrition form submission
+  //     setTimeout(() => {
+  //       setIsSubmitting(false);
+  //       navigate(`/results/${encodeURIComponent(dishName)}`);
+  //     }, 600);
+  //   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!dishName.trim()) {
       toast.error("Please enter a dish name");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
-    // Nutrition form submission
+
     setTimeout(() => {
+      localStorage.setItem("dishName", dishName); // Save to localStorage
       setIsSubmitting(false);
-      navigate(`/results/${encodeURIComponent(dishName)}`);
+      navigate("/results");
     }, 600);
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
+    <form
+      onSubmit={handleSubmit}
       className="w-full max-w-md mx-auto animate-fade-in"
     >
       <div className="mb-4">
@@ -41,9 +57,9 @@ const DishForm = () => {
           disabled={isSubmitting}
         />
       </div>
-      
-      <Button 
-        type="submit" 
+
+      <Button
+        type="submit"
         className="w-full py-6 bg-indian-saffron hover:bg-indian-saffron/90 text-white rounded-xl text-lg font-semibold transition-all"
         disabled={isSubmitting}
       >
