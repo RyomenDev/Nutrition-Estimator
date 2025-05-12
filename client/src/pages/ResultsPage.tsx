@@ -34,6 +34,10 @@ type NutritionResponse = {
   details: string | null;
 };
 
+const baseURL= import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api`
+    : "http://localhost:3000/api";
+
 const ResultsPage = () => {
   const dishName = localStorage.getItem("dishName") || "";
 
@@ -46,7 +50,7 @@ const ResultsPage = () => {
     new URLSearchParams(location.search).get("debug") === "true";
 
   const requestData = {
-    url: "http://localhost:3000/api/estimate-nutrition",
+    url: `${baseURL}/estimate-nutrition`,
     method: "POST",
     body: { dishName },
     headers: { "Content-Type": "application/json" },
