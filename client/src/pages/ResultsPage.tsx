@@ -180,6 +180,10 @@ const ResultsPage = () => {
         </div>
 
         {/* <NutritionChart data={nutrition.nutrition_per_serving} /> */}
+        <NutritionChart
+          geminiData={nutrition.nutrition_per_serving}
+          excelData={nutrition.estimated_nutrition_from_excel}
+        />
 
         {/* Nutrition Comparison Section */}
         <div className="mt-10">
@@ -196,7 +200,9 @@ const ResultsPage = () => {
               <div className="font-semibold text-sm text-indigo-700">
                 Gemini
               </div>
-              <div className="font-semibold text-sm text-green-700">Excel (per 100gm)</div>
+              <div className="font-semibold text-sm text-green-700">
+                Excel (per 100gm)
+              </div>
               <div className="col-span-3 hidden md:block" />
 
               {[
