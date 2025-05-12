@@ -186,7 +186,7 @@ const ResultsPage = () => {
         />
 
         {/* Nutrition Comparison Section */}
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <h3 className="text-xl font-semibold text-indian-brown mb-4">
             Gemini vs Excel Nutrition Estimate
           </h3>
@@ -251,6 +251,66 @@ const ResultsPage = () => {
                       {excelValue}
                     </div>
                     <div className="col-span-3 hidden md:block" />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div> */}
+
+        {/* Nutrition Comparison Section */}
+        <div className="mt-10">
+          <h3 className="text-xl font-semibold text-indian-brown mb-4">
+            Gemini vs Excel Nutrition Estimate
+          </h3>
+
+          {Object.values(nutrition.estimated_nutrition_from_excel).every(
+            (val) => val === 0
+          ) ? (
+            <p className="text-red-500">Excel-based estimate not available.</p>
+          ) : (
+            <div className="space-y-4">
+              {[
+                { label: "Calories", key: "calories_kcal" },
+                { label: "Protein", key: "protein_g" },
+                { label: "Carbs", key: "carbs_g" },
+                { label: "Fat", key: "fat_g" },
+                { label: "Fiber", key: "fiber_g" },
+                { label: "Free Sugar", key: "free_sugar_g" },
+              ].map(({ label, key }, index) => {
+                const excelKeyMap: Record<string, string> = {
+                  calories_kcal: "energy_kcal",
+                  protein_g: "protein_g",
+                  carbs_g: "carb_g",
+                  fat_g: "fat_g",
+                  fiber_g: "fibre_g",
+                  free_sugar_g: "freesugar_g",
+                };
+
+                const excelKey = excelKeyMap[
+                  key
+                ] as keyof typeof nutrition.estimated_nutrition_from_excel;
+                const excelValue =
+                  nutrition.estimated_nutrition_from_excel[excelKey];
+                const geminiValue =
+                  nutrition.nutrition_per_serving[
+                    key as keyof typeof nutrition.nutrition_per_serving
+                  ];
+
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white rounded-lg p-3 shadow"
+                  >
+                    <div className="text-sm font-medium w-full sm:w-1/3">
+                      {label}
+                    </div>
+                    <div className="text-indigo-700 w-full sm:w-1/3 text-sm font-semibold">
+                      Gemini: {geminiValue}
+                    </div>
+                    <div className="text-green-700 w-full sm:w-1/3 text-sm font-semibold">
+                      Excel: {excelValue}
+                    </div>
                   </div>
                 );
               })}

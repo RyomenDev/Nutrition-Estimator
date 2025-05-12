@@ -37,7 +37,7 @@ type NutritionChartProps = {
 
 const NutritionChart = ({ geminiData, excelData }: NutritionChartProps) => {
   const isMobile = useIsMobile();
-  console.log({geminiData,excelData});
+//   console.log({geminiData,excelData});
   
 
   const chartData = [
