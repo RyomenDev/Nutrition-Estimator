@@ -8,23 +8,6 @@ const DishForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  //   const handleSubmit = (e: React.FormEvent) => {
-  //     e.preventDefault();
-
-  //     if (!dishName.trim()) {
-  //       toast.error("Please enter a dish name");
-  //       return;
-  //     }
-
-  //     setIsSubmitting(true);
-
-  //     // Nutrition form submission
-  //     setTimeout(() => {
-  //       setIsSubmitting(false);
-  //       navigate(`/results/${encodeURIComponent(dishName)}`);
-  //     }, 600);
-  //   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -53,7 +36,7 @@ const DishForm = () => {
           placeholder="Enter dish name (e.g., Palak Paneer)"
           value={dishName}
           onChange={(e) => setDishName(e.target.value)}
-          className="dish-input"
+          className="dish-input p-1 w-full border-b-2 border-gray-300 focus:border-indigo-600 focus:outline-none transition duration-150"
           disabled={isSubmitting}
         />
       </div>
