@@ -32,7 +32,7 @@ const ResultsPage = () => {
 
   // Mock request data for debug mode
   const requestData = {
-    url: "/api/estimate-nutrition",
+    url: "http://localhost:3000/api/estimate-nutrition",
     method: "POST",
     body: { dishName },
     headers: { "Content-Type": "application/json" },
@@ -45,50 +45,30 @@ const ResultsPage = () => {
       return;
     }
 
-    // Simulate API call
     const fetchNutrition = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        const response = await fetch(
+          "http://localhost:3000/api/estimate-nutrition",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ dishName }),
+          }
+        );
 
-        // Decide if we want to simulate an error (small chance)
-        const simulateError = Math.random() > 0.9;
-
-        if (simulateError) {
-          throw new Error(
-            "Could not analyze this dish. Please try again or try with a different dish name."
-          );
+        if (!response.ok) {
+          throw new Error("Failed to fetch nutrition data");
         }
 
-        // Mock response data
-        const mockResponse: NutritionResponse = {
-          dish: dishName || "Unknown dish",
-          type: ["Dry Sabzi", "Wet Curry", "Rice Dish", "Daal"][
-            Math.floor(Math.random() * 4)
-          ],
-          nutrition_per_katori: {
-            calories: Math.floor(Math.random() * 200) + 100,
-            protein: parseFloat((Math.random() * 10 + 2).toFixed(1)),
-            carbs: parseFloat((Math.random() * 25 + 10).toFixed(1)),
-            fat: parseFloat((Math.random() * 12 + 3).toFixed(1)),
-            fiber: parseFloat((Math.random() * 5 + 1).toFixed(1)),
-          },
-          assumptions: [
-            `Assumed 1 katori = 180g`,
-            `Defaulted oil quantity to ${
-              Math.floor(Math.random() * 2) + 1
-            } tbsp`,
-            `Estimated based on typical ${dishName} recipe`,
-            `Used standard proportions of ingredients`,
-          ],
-        };
-
-        setNutrition(mockResponse);
+        const data = await response.json();
+        setNutrition(data);
       } catch (err: any) {
-        setError(err.message || "Failed to fetch nutrition data");
+        setError(err.message || "Unexpected error occurred");
       } finally {
         setLoading(false);
       }
@@ -96,6 +76,7 @@ const ResultsPage = () => {
 
     fetchNutrition();
   }, [dishName]);
+  
 
   if (loading) {
     return <LoadingSpinner />;
