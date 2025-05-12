@@ -179,7 +179,7 @@ const ResultsPage = () => {
           />
         </div>
 
-        <NutritionChart data={nutrition.nutrition_per_serving} />
+        {/* <NutritionChart data={nutrition.nutrition_per_serving} /> */}
 
         {/* Nutrition Comparison Section */}
         <div className="mt-10">
